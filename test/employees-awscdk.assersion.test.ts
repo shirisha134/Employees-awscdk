@@ -5,8 +5,7 @@ import * as EmployeesAwscdk from '../lib/employees-awscdk-stack';
 test('DynamoDB Table Created', () => {
   const app = new cdk.App();
   // WHEN
-  new EmployeesAwscdk.EmployeesAwscdkStack(app, 'MyTestStack', {stackName: 'myStack'});
-  console.log(app);
+  const stack = new EmployeesAwscdk.EmployeesAwscdkStack(app, 'MyTestStack', {stackName: 'myStack'});
   // THEN
-  expectCDK(app).to(haveResource('AWS::DynamoDB::Table'));
+  expectCDK(stack).to(haveResource('AWS::DynamoDB::Table'));
 });
