@@ -1,0 +1,914 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot Test: Should compare the cloudFormation template for the whole stack 1`] = `
+Object {
+  "Outputs": Object {
+    "defaultapigatewayEndpoint7979F3A3": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "defaultapigatewayB5D6E14C",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "defaultapigatewayDeploymentStageprodDBB4F3F0",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563ArtifactHashC1EA1F03": Object {
+      "Description": "Artifact hash for asset \\"2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563\\"",
+      "Type": "String",
+    },
+    "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3Bucket5E5AE65E": Object {
+      "Description": "S3 bucket for asset \\"2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563\\"",
+      "Type": "String",
+    },
+    "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3VersionKey4BA9CE50": Object {
+      "Description": "S3 key for asset version \\"2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "HelloHandler2E4FBA4D": Object {
+      "DependsOn": Array [
+        "HelloHandlerServiceRole11EF7C63",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3Bucket5E5AE65E",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3VersionKey4BA9CE50",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3VersionKey4BA9CE50",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_REGION": Object {
+              "Ref": "AWS::Region",
+            },
+            "PRIMARY_KEY": "employeeId",
+            "TABLE_NAME": "default_employees",
+          },
+        },
+        "Handler": "hello.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "HelloHandlerServiceRole11EF7C63",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs10.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "HelloHandlerServiceRole11EF7C63": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "defaultapigatewayAccount3D159435": Object {
+      "DependsOn": Array [
+        "defaultapigatewayB5D6E14C",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "defaultapigatewayCloudWatchRole54D7D6AF",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "defaultapigatewayB5D6E14C": Object {
+      "Properties": Object {
+        "Name": "default_apigateway",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "defaultapigatewayCloudWatchRole54D7D6AF": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "defaultapigatewayDeployment08E64DE023980b979e10b9576b841db3c0c5f44d": Object {
+      "DependsOn": Array [
+        "defaultapigatewaycreateemployeePOSTB3C15440",
+        "defaultapigatewaycreateemployee54B22227",
+        "defaultapigatewaygetallemployeesGETD2555B48",
+        "defaultapigatewaygetallemployeesB0F14CDB",
+        "defaultapigatewayhelloGET9EA5EA25",
+        "defaultapigatewayhelloFD4992D6",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "defaultapigatewayB5D6E14C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "defaultapigatewayDeploymentStageprodDBB4F3F0": Object {
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "defaultapigatewayDeployment08E64DE023980b979e10b9576b841db3c0c5f44d",
+        },
+        "RestApiId": Object {
+          "Ref": "defaultapigatewayB5D6E14C",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "defaultapigatewaycreateemployee54B22227": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "defaultapigatewayB5D6E14C",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "createemployee",
+        "RestApiId": Object {
+          "Ref": "defaultapigatewayB5D6E14C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "defaultapigatewaycreateemployeePOSTApiPermissionMyTestStackdefaultapigateway041ADEC3POSTcreateemployee9313E2D8": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "postEmployeeLambdaId21D06B84",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "defaultapigatewayB5D6E14C",
+              },
+              "/",
+              Object {
+                "Ref": "defaultapigatewayDeploymentStageprodDBB4F3F0",
+              },
+              "/POST/createemployee",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "defaultapigatewaycreateemployeePOSTApiPermissionTestMyTestStackdefaultapigateway041ADEC3POSTcreateemployeeBBEABA20": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "postEmployeeLambdaId21D06B84",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "defaultapigatewayB5D6E14C",
+              },
+              "/test-invoke-stage/POST/createemployee",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "defaultapigatewaycreateemployeePOSTB3C15440": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "POST",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "postEmployeeLambdaId21D06B84",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "defaultapigatewaycreateemployee54B22227",
+        },
+        "RestApiId": Object {
+          "Ref": "defaultapigatewayB5D6E14C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "defaultapigatewaygetallemployeesB0F14CDB": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "defaultapigatewayB5D6E14C",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "getallemployees",
+        "RestApiId": Object {
+          "Ref": "defaultapigatewayB5D6E14C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "defaultapigatewaygetallemployeesGETApiPermissionMyTestStackdefaultapigateway041ADEC3GETgetallemployees9F17F484": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "getAllEmployeesLambdaIdB222E456",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "defaultapigatewayB5D6E14C",
+              },
+              "/",
+              Object {
+                "Ref": "defaultapigatewayDeploymentStageprodDBB4F3F0",
+              },
+              "/GET/getallemployees",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "defaultapigatewaygetallemployeesGETApiPermissionTestMyTestStackdefaultapigateway041ADEC3GETgetallemployees75267A20": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "getAllEmployeesLambdaIdB222E456",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "defaultapigatewayB5D6E14C",
+              },
+              "/test-invoke-stage/GET/getallemployees",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "defaultapigatewaygetallemployeesGETD2555B48": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "getAllEmployeesLambdaIdB222E456",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "defaultapigatewaygetallemployeesB0F14CDB",
+        },
+        "RestApiId": Object {
+          "Ref": "defaultapigatewayB5D6E14C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "defaultapigatewayhelloFD4992D6": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "defaultapigatewayB5D6E14C",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "hello",
+        "RestApiId": Object {
+          "Ref": "defaultapigatewayB5D6E14C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "defaultapigatewayhelloGET9EA5EA25": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "HelloHandler2E4FBA4D",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "defaultapigatewayhelloFD4992D6",
+        },
+        "RestApiId": Object {
+          "Ref": "defaultapigatewayB5D6E14C",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "defaultapigatewayhelloGETApiPermissionMyTestStackdefaultapigateway041ADEC3GEThello93ABC4CF": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloHandler2E4FBA4D",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "defaultapigatewayB5D6E14C",
+              },
+              "/",
+              Object {
+                "Ref": "defaultapigatewayDeploymentStageprodDBB4F3F0",
+              },
+              "/GET/hello",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "defaultapigatewayhelloGETApiPermissionTestMyTestStackdefaultapigateway041ADEC3GEThello796F2BE7": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloHandler2E4FBA4D",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "defaultapigatewayB5D6E14C",
+              },
+              "/test-invoke-stage/GET/hello",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "employeesDynamoDBIntanceID2B51FA38": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "AttributeDefinitions": Array [
+          Object {
+            "AttributeName": "employeeId",
+            "AttributeType": "N",
+          },
+        ],
+        "KeySchema": Array [
+          Object {
+            "AttributeName": "employeeId",
+            "KeyType": "HASH",
+          },
+        ],
+        "ProvisionedThroughput": Object {
+          "ReadCapacityUnits": 5,
+          "WriteCapacityUnits": 5,
+        },
+        "TableName": "default_employees",
+      },
+      "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "getAllEmployeesLambdaIdB222E456": Object {
+      "DependsOn": Array [
+        "getAllEmployeesLambdaIdServiceRoleDefaultPolicyAA33EFB9",
+        "getAllEmployeesLambdaIdServiceRole04E912E9",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3Bucket5E5AE65E",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3VersionKey4BA9CE50",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3VersionKey4BA9CE50",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "PRIMARY_KEY": "employeeId",
+            "TABLE_NAME": "default_employees",
+          },
+        },
+        "Handler": "get-all.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "getAllEmployeesLambdaIdServiceRole04E912E9",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs10.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "getAllEmployeesLambdaIdServiceRole04E912E9": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "getAllEmployeesLambdaIdServiceRoleDefaultPolicyAA33EFB9": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "employeesDynamoDBIntanceID2B51FA38",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "getAllEmployeesLambdaIdServiceRoleDefaultPolicyAA33EFB9",
+        "Roles": Array [
+          Object {
+            "Ref": "getAllEmployeesLambdaIdServiceRole04E912E9",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "postEmployeeLambdaId21D06B84": Object {
+      "DependsOn": Array [
+        "postEmployeeLambdaIdServiceRoleDefaultPolicyFED76179",
+        "postEmployeeLambdaIdServiceRole3F633F3E",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3Bucket5E5AE65E",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3VersionKey4BA9CE50",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters2b2a22ec23ce15687b54a2d0c5bc4e6718a2b8dbce7a3c5bbbaa7b2f8c34c563S3VersionKey4BA9CE50",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_REGION": Object {
+              "Ref": "AWS::Region",
+            },
+            "PRIMARY_KEY": "employeeId",
+            "TABLE_NAME": "default_employees",
+          },
+        },
+        "Handler": "create.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "postEmployeeLambdaIdServiceRole3F633F3E",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs10.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "postEmployeeLambdaIdServiceRole3F633F3E": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "postEmployeeLambdaIdServiceRoleDefaultPolicyFED76179": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "employeesDynamoDBIntanceID2B51FA38",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "postEmployeeLambdaIdServiceRoleDefaultPolicyFED76179",
+        "Roles": Array [
+          Object {
+            "Ref": "postEmployeeLambdaIdServiceRole3F633F3E",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+}
+`;
