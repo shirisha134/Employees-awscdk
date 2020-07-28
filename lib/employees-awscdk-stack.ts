@@ -6,14 +6,14 @@ import * as apigateway from "@aws-cdk/aws-apigateway";
 export class EmployeesAwscdkStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
-    console.log("propspropsprops", props);
-    console.log("this.account", this.account);
-    console.log("this.region", this.region);
-    const siteName = (props && props.stackName) ? props.stackName : "default";
+    const siteName = props && props.stackName;
+    if(!siteName) {
+      throw new Error('Please provide stackName!');
+    }
     var apiGatewayName = siteName + "_apigateway";
     var tableName = siteName + "_employees";
     var lambdaVars = { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId", AWS_REGION: this.region };
-    // The code that defines your stack goes here
+    
     // instantiate dynamodb table instance with default instance size and resource id starts with employeesDynamoDBIntanceID
     const employeesDynamoDBIntance = new dynamodb.Table(
       this,
