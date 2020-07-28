@@ -12,8 +12,7 @@ export class EmployeesAwscdkStack extends cdk.Stack {
     }
     var apiGatewayName = siteName + "_apigateway";
     var tableName = siteName + "_employees";
-    var lambdaVars = { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId", AWS_REGION: this.region };
-    
+    var lambdaVars = { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId" };
     // instantiate dynamodb table instance with default instance size and resource id starts with employeesDynamoDBIntanceID
     const employeesDynamoDBIntance = new dynamodb.Table(
       this,
@@ -30,6 +29,9 @@ export class EmployeesAwscdkStack extends cdk.Stack {
 
     // creating api gatway
     const api = new apigateway.RestApi(this, apiGatewayName);
+    // creating resource on api gatway
+    const employee = api.root.addResource("employee");
+    const welcome = api.root.addResource("welcome");
 
     // --- welcome lambda ---
     const welcomeLambda = new lambda.Function(this, "HelloHandler", {
@@ -41,8 +43,7 @@ export class EmployeesAwscdkStack extends cdk.Stack {
 
     // greeter lambda integration
     const helloIntegration = new apigateway.LambdaIntegration(welcomeLambda);
-    const apiHello = api.root.addResource("hello");
-    apiHello.addMethod("GET", helloIntegration);
+    welcome.addMethod("GET", helloIntegration);
 
     // create lambda for posting a record/employee
     const postEmployeeLambda = new lambda.Function(
@@ -56,14 +57,13 @@ export class EmployeesAwscdkStack extends cdk.Stack {
       }
     );
     // granting readWrite permissions to lambdas on employeesDynamoDBIntance
-    employeesDynamoDBIntance.grantReadWriteData(postEmployeeLambda);
+    employeesDynamoDBIntance.grantFullAccess(postEmployeeLambda);
     // Integrating createLambda with apigateway
     const createIntegration = new apigateway.LambdaIntegration(
       postEmployeeLambda
     );
-    // creating resource on api gatway
-    const createEmployee = api.root.addResource("createemployee");
-    createEmployee.addMethod("POST", createIntegration);
+
+    employee.addMethod("POST", createIntegration);
     // adding cors for post request
     // addCorsOptions(createEmployee);
 
@@ -80,13 +80,10 @@ export class EmployeesAwscdkStack extends cdk.Stack {
     );
     // granting read permissions to lambda on employeesDynamoDBIntance
     employeesDynamoDBIntance.grantReadData(getAllEmployeeLambda);
-    // creating resource on api gatway
-    const getallEmployees = api.root.addResource("getallemployees");
     // Integrating getAllLambda with apigateway
     const getAllIntegration = new apigateway.LambdaIntegration(
       getAllEmployeeLambda
     );
-    getallEmployees.addMethod("GET", getAllIntegration);
+    employee.addMethod("GET", getAllIntegration);
   }
 }
-
