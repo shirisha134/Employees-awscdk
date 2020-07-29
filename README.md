@@ -13,6 +13,10 @@ This project includes 3 Lambdas in a default VPC that receive event triggers man
 4. The regions include `ap-south-1(mumbai)`, `ap-southeast-2(sydney)`
 
 
+## **Application Architecture:**
+
+![Application Architecture](images/architecture.png)
+
 ## Prerequisites:
 
 Make sure node version to be 10.3.0 or later
