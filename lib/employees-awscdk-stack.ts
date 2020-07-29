@@ -3,27 +3,36 @@ import { DynamoDBConstruct } from "./dynamo-db.construct";
 import { ApiGatewayConstruct } from "./api-gateway.construct";
 import { LambdaConstruct } from "./lambda.construct";
 
+const STACK_NAME_EMPTY_ERROR = "Please provide stackName!";
+const apiGatewayNameSuffix = "_apigateway";
+const dynamoDbTableSuffix = "_employees";
+const primaryKey = "employeeId";
+const partitionKey = "employeeId";
+const helloHandler = "hello.handler";
+const createHandler = "create.handler";
+const getAllHandler = "get-all.handler";
+
 export class EmployeesAwscdkStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     const siteName = props && props.stackName;
     if (!siteName) {
-      throw new Error("Please provide stackName!");
+      throw new Error(STACK_NAME_EMPTY_ERROR);
     }
-    var apiGatewayName = siteName + "_apigateway";
-    var tableName = siteName + "_employees";
-    var lambdaVars = { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId" };
+    var apiGatewayName = `${siteName}${apiGatewayNameSuffix}`;
+    var tableName = `${siteName}${dynamoDbTableSuffix}`;
+    var lambdaVars = { TABLE_NAME: tableName, PRIMARY_KEY: primaryKey };
 
     // Provision dynamoDb
     const employeesDynamoDBIntance = new DynamoDBConstruct(this, id, {
       tableName,
-      partitionKeyName: "employeeId",
+      partitionKeyName: partitionKey,
     }).dynamoDbTable;
 
     // --- welcome lambda ---
     const welcomeLambda = new LambdaConstruct(this, "HelloHandler", {
       environment: { SITE_NAME: siteName },
-      handler: "hello.handler",
+      handler: helloHandler,
     }).lambda;
 
     // --- Post demployee data lambda ---
@@ -32,7 +41,7 @@ export class EmployeesAwscdkStack extends cdk.Stack {
       "postEmployeeLambdaId",
       {
         environment: lambdaVars,
-        handler: "create.handler",
+        handler: createHandler,
       }
     ).lambda;
     // granting readWrite permissions to lambdas on employeesDynamoDBIntance
@@ -44,7 +53,7 @@ export class EmployeesAwscdkStack extends cdk.Stack {
       "getAllEmployeesLambdaId",
       {
         environment: lambdaVars,
-        handler: "get-all.handler",
+        handler: getAllHandler,
       }
     ).lambda;
     // granting read permissions to lambda on employeesDynamoDBIntance
