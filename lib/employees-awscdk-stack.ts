@@ -1,7 +1,7 @@
 import * as cdk from "@aws-cdk/core";
-import * as lambda from "@aws-cdk/aws-lambda";
 import { DynamoDBConstruct } from "./dynamo-db.construct";
 import { ApiGatewayConstruct } from "./api-gateway.construct";
+import { LambdaConstruct } from "./lambda.construct";
 
 export class EmployeesAwscdkStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -21,38 +21,32 @@ export class EmployeesAwscdkStack extends cdk.Stack {
     }).dynamoDbTable;
 
     // --- welcome lambda ---
-    const welcomeLambda = new lambda.Function(this, "HelloHandler", {
-      runtime: lambda.Runtime.NODEJS_10_X,
-      code: new lambda.AssetCode("src"),
+    const welcomeLambda = new LambdaConstruct(this, "HelloHandler", {
       environment: { SITE_NAME: siteName },
       handler: "hello.handler",
-    });
+    }).lambda;
 
-    // create lambda for posting a record/employee
-    const postEmployeeLambda = new lambda.Function(
+    // --- Post demployee data lambda ---
+    const postEmployeeLambda = new LambdaConstruct(
       this,
       "postEmployeeLambdaId",
       {
-        code: new lambda.AssetCode("src"),
-        handler: "create.handler",
-        runtime: lambda.Runtime.NODEJS_10_X,
         environment: lambdaVars,
+        handler: "create.handler",
       }
-    );
+    ).lambda;
     // granting readWrite permissions to lambdas on employeesDynamoDBIntance
     employeesDynamoDBIntance.grantFullAccess(postEmployeeLambda);
 
-    // create lambda for getting all records/employees
-    const getAllEmployeeLambda = new lambda.Function(
+    // --- Get all demployee data lambda ---
+    const getAllEmployeeLambda = new LambdaConstruct(
       this,
       "getAllEmployeesLambdaId",
       {
-        code: new lambda.AssetCode("src"),
+        environment: lambdaVars,
         handler: "get-all.handler",
-        runtime: lambda.Runtime.NODEJS_10_X,
-        environment: { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId" },
       }
-    );
+    ).lambda;
     // granting read permissions to lambda on employeesDynamoDBIntance
     employeesDynamoDBIntance.grantReadData(getAllEmployeeLambda);
 
