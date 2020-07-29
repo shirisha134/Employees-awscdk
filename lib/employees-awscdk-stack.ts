@@ -1,89 +1,76 @@
 import * as cdk from "@aws-cdk/core";
-import * as dynamodb from "@aws-cdk/aws-dynamodb";
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as apigateway from "@aws-cdk/aws-apigateway";
+import { DynamoDBConstruct } from "./dynamo-db.construct";
+import { ApiGatewayConstruct } from "./api-gateway.construct";
+import { LambdaConstruct } from "./lambda.construct";
+
+const STACK_NAME_EMPTY_ERROR = "Please provide stackName!";
+const apiGatewayNameSuffix = "_apigateway";
+const dynamoDbTableSuffix = "_employees";
+const primaryKey = "employeeId";
+const partitionKey = "employeeId";
+const helloHandler = "hello.handler";
+const createHandler = "create.handler";
+const getAllHandler = "get-all.handler";
 
 export class EmployeesAwscdkStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     const siteName = props && props.stackName;
-    if(!siteName) {
-      throw new Error('Please provide stackName!');
+    if (!siteName) {
+      throw new Error(STACK_NAME_EMPTY_ERROR);
     }
-    var apiGatewayName = siteName + "_apigateway";
-    var tableName = siteName + "_employees";
-    var lambdaVars = { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId" };
-    // instantiate dynamodb table instance with default instance size and resource id starts with employeesDynamoDBIntanceID
-    const employeesDynamoDBIntance = new dynamodb.Table(
-      this,
-      "employeesDynamoDBIntanceID",
-      {
-        tableName: tableName,
-        partitionKey: {
-          name: "employeeId",
-          type: dynamodb.AttributeType.NUMBER
-        },
-        removalPolicy: cdk.RemovalPolicy.DESTROY
-      }
-    );
+    var apiGatewayName = `${siteName}${apiGatewayNameSuffix}`;
+    var tableName = `${siteName}${dynamoDbTableSuffix}`;
+    var lambdaVars = { TABLE_NAME: tableName, PRIMARY_KEY: primaryKey };
 
-    // creating api gatway
-    const api = new apigateway.RestApi(this, apiGatewayName);
-    // creating resource on api gatway
-    const employee = api.root.addResource("employee");
-    const welcome = api.root.addResource("welcome");
+    // Provision dynamoDb
+    const employeesDynamoDBIntance = new DynamoDBConstruct(this, id, {
+      tableName,
+      partitionKeyName: partitionKey,
+    }).dynamoDbTable;
+
+    // tag employeesDynamoDBIntance, this will add tags to the node of a construct and all its the taggable children
+    cdk.Tag.add(employeesDynamoDBIntance, "stackType", "dynamoTag");
 
     // --- welcome lambda ---
-    const welcomeLambda = new lambda.Function(this, "HelloHandler", {
-      runtime: lambda.Runtime.NODEJS_10_X,
-      code: lambda.Code.fromAsset("src"),
-      environment: lambdaVars,
-      handler: "hello.handler"
-    });
+    const welcomeLambda = new LambdaConstruct(this, "HelloHandler", {
+      environment: { SITE_NAME: siteName },
+      handler: helloHandler,
+    }).lambda;
 
-    // greeter lambda integration
-    const helloIntegration = new apigateway.LambdaIntegration(welcomeLambda);
-    welcome.addMethod("GET", helloIntegration);
-
-    // create lambda for posting a record/employee
-    const postEmployeeLambda = new lambda.Function(
+    // --- Post demployee data lambda ---
+    const postEmployeeLambda = new LambdaConstruct(
       this,
       "postEmployeeLambdaId",
       {
-        code: new lambda.AssetCode("src"),
-        handler: "create.handler",
-        runtime: lambda.Runtime.NODEJS_10_X,
-        environment: lambdaVars
+        environment: lambdaVars,
+        handler: createHandler,
       }
-    );
+    ).lambda;
     // granting readWrite permissions to lambdas on employeesDynamoDBIntance
     employeesDynamoDBIntance.grantFullAccess(postEmployeeLambda);
-    // Integrating createLambda with apigateway
-    const createIntegration = new apigateway.LambdaIntegration(
-      postEmployeeLambda
-    );
 
-    employee.addMethod("POST", createIntegration);
-    // adding cors for post request
-    // addCorsOptions(createEmployee);
+    // tag a postEmployeeLambda, this will add tags to the node of a construct and all its the taggable children
+    cdk.Tag.add(postEmployeeLambda, "stackType", "lambdaTag");
 
-    // create lambda for getting all records/employees
-    const getAllEmployeeLambda = new lambda.Function(
+    // --- Get all demployee data lambda ---
+    const getAllEmployeeLambda = new LambdaConstruct(
       this,
       "getAllEmployeesLambdaId",
       {
-        code: new lambda.AssetCode("src"),
-        handler: "get-all.handler",
-        runtime: lambda.Runtime.NODEJS_10_X,
-        environment: { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId" }
+        environment: lambdaVars,
+        handler: getAllHandler,
       }
-    );
+    ).lambda;
     // granting read permissions to lambda on employeesDynamoDBIntance
     employeesDynamoDBIntance.grantReadData(getAllEmployeeLambda);
-    // Integrating getAllLambda with apigateway
-    const getAllIntegration = new apigateway.LambdaIntegration(
-      getAllEmployeeLambda
-    );
-    employee.addMethod("GET", getAllIntegration);
+
+    // Integrating all lambdas with apigateway with specific methods
+    new ApiGatewayConstruct(this, apiGatewayName)
+      .addResource("welcome", [{ lambda: welcomeLambda, method: "GET" }])
+      .addResource("employee", [
+        { lambda: postEmployeeLambda, method: "POST" },
+        { lambda: getAllEmployeeLambda, method: "GET" },
+      ]);
   }
 }

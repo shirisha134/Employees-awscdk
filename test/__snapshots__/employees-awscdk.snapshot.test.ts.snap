@@ -3,14 +3,14 @@
 exports[`Should compare the cloudFormation template for the whole stack 1`] = `
 Object {
   "Outputs": Object {
-    "MyStackapigatewayEndpointDA24E944": Object {
+    "MyStackapigatewayEndpointB5D50007": Object {
       "Value": Object {
         "Fn::Join": Array [
           "",
           Array [
             "https://",
             Object {
-              "Ref": "MyStackapigateway437AED50",
+              "Ref": "MyStackapigatewayDAC610D1",
             },
             ".execute-api.",
             Object {
@@ -22,7 +22,7 @@ Object {
             },
             "/",
             Object {
-              "Ref": "MyStackapigatewayDeploymentStageprod0819FE2D",
+              "Ref": "MyStackapigatewayDeploymentStageprod39B0FA82",
             },
             "/",
           ],
@@ -31,28 +31,28 @@ Object {
     },
   },
   "Parameters": Object {
-    "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dArtifactHash05E448BA": Object {
-      "Description": "Artifact hash for asset \\"cb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9d\\"",
+    "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253ArtifactHashCD3C2BF7": Object {
+      "Description": "Artifact hash for asset \\"6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253\\"",
       "Type": "String",
     },
-    "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3Bucket567EFC9B": Object {
-      "Description": "S3 bucket for asset \\"cb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9d\\"",
+    "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3Bucket6EB586B1": Object {
+      "Description": "S3 bucket for asset \\"6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253\\"",
       "Type": "String",
     },
-    "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3VersionKey1D5557B3": Object {
-      "Description": "S3 key for asset version \\"cb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9d\\"",
+    "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3VersionKeyECF3FF76": Object {
+      "Description": "S3 key for asset version \\"6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253\\"",
       "Type": "String",
     },
   },
   "Resources": Object {
-    "HelloHandler2E4FBA4D": Object {
+    "HelloHandler64B8C687": Object {
       "DependsOn": Array [
-        "HelloHandlerServiceRole11EF7C63",
+        "HelloHandlerServiceRole8D36B8C4",
       ],
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3Bucket567EFC9B",
+            "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3Bucket6EB586B1",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -65,7 +65,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3VersionKey1D5557B3",
+                          "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3VersionKeyECF3FF76",
                         },
                       ],
                     },
@@ -78,7 +78,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3VersionKey1D5557B3",
+                          "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3VersionKeyECF3FF76",
                         },
                       ],
                     },
@@ -90,14 +90,13 @@ Object {
         },
         "Environment": Object {
           "Variables": Object {
-            "PRIMARY_KEY": "employeeId",
-            "TABLE_NAME": "MyStack_employees",
+            "SITE_NAME": "MyStack",
           },
         },
         "Handler": "hello.handler",
         "Role": Object {
           "Fn::GetAtt": Array [
-            "HelloHandlerServiceRole11EF7C63",
+            "HelloHandlerServiceRole8D36B8C4",
             "Arn",
           ],
         },
@@ -105,7 +104,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "HelloHandlerServiceRole11EF7C63": Object {
+    "HelloHandlerServiceRole8D36B8C4": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -136,27 +135,21 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "MyStackapigateway437AED50": Object {
-      "Properties": Object {
-        "Name": "MyStack_apigateway",
-      },
-      "Type": "AWS::ApiGateway::RestApi",
-    },
-    "MyStackapigatewayAccount9F47D461": Object {
+    "MyStackapigatewayAccountFD76BB92": Object {
       "DependsOn": Array [
-        "MyStackapigateway437AED50",
+        "MyStackapigatewayDAC610D1",
       ],
       "Properties": Object {
         "CloudWatchRoleArn": Object {
           "Fn::GetAtt": Array [
-            "MyStackapigatewayCloudWatchRole8F52FF5F",
+            "MyStackapigatewayCloudWatchRole92A0BC04",
             "Arn",
           ],
         },
       },
       "Type": "AWS::ApiGateway::Account",
     },
-    "MyStackapigatewayCloudWatchRole8F52FF5F": Object {
+    "MyStackapigatewayCloudWatchRole92A0BC04": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -187,128 +180,56 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "MyStackapigatewayDeployment72E4AA639967096f05e6ae5937d688807cc0a4cd": Object {
+    "MyStackapigatewayDAC610D1": Object {
+      "Properties": Object {
+        "Name": "MyStack_apigateway",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "MyStackapigatewayDeploymentBA9C1747277ca116b2d800a0728f39fef54811ba": Object {
       "DependsOn": Array [
-        "MyStackapigatewayemployeeGETE0C80FF2",
-        "MyStackapigatewayemployeePOST0FE0A8E2",
-        "MyStackapigatewayemployeeC8336B16",
-        "MyStackapigatewaywelcomeGETFF831510",
-        "MyStackapigatewaywelcome1FB3AC7F",
+        "MyStackapigatewayemployeeGET5841DC4B",
+        "MyStackapigatewayemployeePOSTF5A96160",
+        "MyStackapigatewayemployee9E2BE57A",
+        "MyStackapigatewaywelcomeGET4C09511B",
+        "MyStackapigatewaywelcome2A0CC7E5",
       ],
       "Properties": Object {
         "Description": "Automatically created by the RestApi construct",
         "RestApiId": Object {
-          "Ref": "MyStackapigateway437AED50",
+          "Ref": "MyStackapigatewayDAC610D1",
         },
       },
       "Type": "AWS::ApiGateway::Deployment",
     },
-    "MyStackapigatewayDeploymentStageprod0819FE2D": Object {
+    "MyStackapigatewayDeploymentStageprod39B0FA82": Object {
       "Properties": Object {
         "DeploymentId": Object {
-          "Ref": "MyStackapigatewayDeployment72E4AA639967096f05e6ae5937d688807cc0a4cd",
+          "Ref": "MyStackapigatewayDeploymentBA9C1747277ca116b2d800a0728f39fef54811ba",
         },
         "RestApiId": Object {
-          "Ref": "MyStackapigateway437AED50",
+          "Ref": "MyStackapigatewayDAC610D1",
         },
         "StageName": "prod",
       },
       "Type": "AWS::ApiGateway::Stage",
     },
-    "MyStackapigatewayemployeeC8336B16": Object {
+    "MyStackapigatewayemployee9E2BE57A": Object {
       "Properties": Object {
         "ParentId": Object {
           "Fn::GetAtt": Array [
-            "MyStackapigateway437AED50",
+            "MyStackapigatewayDAC610D1",
             "RootResourceId",
           ],
         },
         "PathPart": "employee",
         "RestApiId": Object {
-          "Ref": "MyStackapigateway437AED50",
+          "Ref": "MyStackapigatewayDAC610D1",
         },
       },
       "Type": "AWS::ApiGateway::Resource",
     },
-    "MyStackapigatewayemployeeGETApiPermissionMyTestStackMyStackapigateway1DF73A8BGETemployee49D4A449": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "getAllEmployeesLambdaIdB222E456",
-            "Arn",
-          ],
-        },
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:",
-              Object {
-                "Ref": "AWS::Partition",
-              },
-              ":execute-api:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":",
-              Object {
-                "Ref": "MyStackapigateway437AED50",
-              },
-              "/",
-              Object {
-                "Ref": "MyStackapigatewayDeploymentStageprod0819FE2D",
-              },
-              "/GET/employee",
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
-    "MyStackapigatewayemployeeGETApiPermissionTestMyTestStackMyStackapigateway1DF73A8BGETemployeeA2BF6EDA": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "getAllEmployeesLambdaIdB222E456",
-            "Arn",
-          ],
-        },
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:",
-              Object {
-                "Ref": "AWS::Partition",
-              },
-              ":execute-api:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":",
-              Object {
-                "Ref": "MyStackapigateway437AED50",
-              },
-              "/test-invoke-stage/GET/employee",
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
-    "MyStackapigatewayemployeeGETE0C80FF2": Object {
+    "MyStackapigatewayemployeeGET5841DC4B": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
         "HttpMethod": "GET",
@@ -330,7 +251,7 @@ Object {
                 ":lambda:path/2015-03-31/functions/",
                 Object {
                   "Fn::GetAtt": Array [
-                    "getAllEmployeesLambdaIdB222E456",
+                    "getAllEmployeesLambdaId1533DD0C",
                     "Arn",
                   ],
                 },
@@ -340,15 +261,171 @@ Object {
           },
         },
         "ResourceId": Object {
-          "Ref": "MyStackapigatewayemployeeC8336B16",
+          "Ref": "MyStackapigatewayemployee9E2BE57A",
         },
         "RestApiId": Object {
-          "Ref": "MyStackapigateway437AED50",
+          "Ref": "MyStackapigatewayDAC610D1",
         },
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "MyStackapigatewayemployeePOST0FE0A8E2": Object {
+    "MyStackapigatewayemployeeGETApiPermissionMyTestStackMyStackapigatewayF59093F8GETemployeeC0D42C46": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "getAllEmployeesLambdaId1533DD0C",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "MyStackapigatewayDAC610D1",
+              },
+              "/",
+              Object {
+                "Ref": "MyStackapigatewayDeploymentStageprod39B0FA82",
+              },
+              "/GET/employee",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "MyStackapigatewayemployeeGETApiPermissionTestMyTestStackMyStackapigatewayF59093F8GETemployee7A10208A": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "getAllEmployeesLambdaId1533DD0C",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "MyStackapigatewayDAC610D1",
+              },
+              "/test-invoke-stage/GET/employee",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "MyStackapigatewayemployeePOSTApiPermissionMyTestStackMyStackapigatewayF59093F8POSTemployee52EAF59D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "postEmployeeLambdaIdEF14D477",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "MyStackapigatewayDAC610D1",
+              },
+              "/",
+              Object {
+                "Ref": "MyStackapigatewayDeploymentStageprod39B0FA82",
+              },
+              "/POST/employee",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "MyStackapigatewayemployeePOSTApiPermissionTestMyTestStackMyStackapigatewayF59093F8POSTemployee154F72D2": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "postEmployeeLambdaIdEF14D477",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "MyStackapigatewayDAC610D1",
+              },
+              "/test-invoke-stage/POST/employee",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "MyStackapigatewayemployeePOSTF5A96160": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
         "HttpMethod": "POST",
@@ -370,7 +447,7 @@ Object {
                 ":lambda:path/2015-03-31/functions/",
                 Object {
                   "Fn::GetAtt": Array [
-                    "postEmployeeLambdaId21D06B84",
+                    "postEmployeeLambdaIdEF14D477",
                     "Arn",
                   ],
                 },
@@ -380,186 +457,30 @@ Object {
           },
         },
         "ResourceId": Object {
-          "Ref": "MyStackapigatewayemployeeC8336B16",
+          "Ref": "MyStackapigatewayemployee9E2BE57A",
         },
         "RestApiId": Object {
-          "Ref": "MyStackapigateway437AED50",
+          "Ref": "MyStackapigatewayDAC610D1",
         },
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "MyStackapigatewayemployeePOSTApiPermissionMyTestStackMyStackapigateway1DF73A8BPOSTemployee203EBD13": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "postEmployeeLambdaId21D06B84",
-            "Arn",
-          ],
-        },
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:",
-              Object {
-                "Ref": "AWS::Partition",
-              },
-              ":execute-api:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":",
-              Object {
-                "Ref": "MyStackapigateway437AED50",
-              },
-              "/",
-              Object {
-                "Ref": "MyStackapigatewayDeploymentStageprod0819FE2D",
-              },
-              "/POST/employee",
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
-    "MyStackapigatewayemployeePOSTApiPermissionTestMyTestStackMyStackapigateway1DF73A8BPOSTemployee90606C92": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "postEmployeeLambdaId21D06B84",
-            "Arn",
-          ],
-        },
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:",
-              Object {
-                "Ref": "AWS::Partition",
-              },
-              ":execute-api:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":",
-              Object {
-                "Ref": "MyStackapigateway437AED50",
-              },
-              "/test-invoke-stage/POST/employee",
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
-    "MyStackapigatewaywelcome1FB3AC7F": Object {
+    "MyStackapigatewaywelcome2A0CC7E5": Object {
       "Properties": Object {
         "ParentId": Object {
           "Fn::GetAtt": Array [
-            "MyStackapigateway437AED50",
+            "MyStackapigatewayDAC610D1",
             "RootResourceId",
           ],
         },
         "PathPart": "welcome",
         "RestApiId": Object {
-          "Ref": "MyStackapigateway437AED50",
+          "Ref": "MyStackapigatewayDAC610D1",
         },
       },
       "Type": "AWS::ApiGateway::Resource",
     },
-    "MyStackapigatewaywelcomeGETApiPermissionMyTestStackMyStackapigateway1DF73A8BGETwelcome42A75A78": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "HelloHandler2E4FBA4D",
-            "Arn",
-          ],
-        },
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:",
-              Object {
-                "Ref": "AWS::Partition",
-              },
-              ":execute-api:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":",
-              Object {
-                "Ref": "MyStackapigateway437AED50",
-              },
-              "/",
-              Object {
-                "Ref": "MyStackapigatewayDeploymentStageprod0819FE2D",
-              },
-              "/GET/welcome",
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
-    "MyStackapigatewaywelcomeGETApiPermissionTestMyTestStackMyStackapigateway1DF73A8BGETwelcome1D271BCB": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "HelloHandler2E4FBA4D",
-            "Arn",
-          ],
-        },
-        "Principal": "apigateway.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::Join": Array [
-            "",
-            Array [
-              "arn:",
-              Object {
-                "Ref": "AWS::Partition",
-              },
-              ":execute-api:",
-              Object {
-                "Ref": "AWS::Region",
-              },
-              ":",
-              Object {
-                "Ref": "AWS::AccountId",
-              },
-              ":",
-              Object {
-                "Ref": "MyStackapigateway437AED50",
-              },
-              "/test-invoke-stage/GET/welcome",
-            ],
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
-    },
-    "MyStackapigatewaywelcomeGETFF831510": Object {
+    "MyStackapigatewaywelcomeGET4C09511B": Object {
       "Properties": Object {
         "AuthorizationType": "NONE",
         "HttpMethod": "GET",
@@ -581,7 +502,7 @@ Object {
                 ":lambda:path/2015-03-31/functions/",
                 Object {
                   "Fn::GetAtt": Array [
-                    "HelloHandler2E4FBA4D",
+                    "HelloHandler64B8C687",
                     "Arn",
                   ],
                 },
@@ -591,15 +512,93 @@ Object {
           },
         },
         "ResourceId": Object {
-          "Ref": "MyStackapigatewaywelcome1FB3AC7F",
+          "Ref": "MyStackapigatewaywelcome2A0CC7E5",
         },
         "RestApiId": Object {
-          "Ref": "MyStackapigateway437AED50",
+          "Ref": "MyStackapigatewayDAC610D1",
         },
       },
       "Type": "AWS::ApiGateway::Method",
     },
-    "employeesDynamoDBIntanceID2B51FA38": Object {
+    "MyStackapigatewaywelcomeGETApiPermissionMyTestStackMyStackapigatewayF59093F8GETwelcome30047A50": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloHandler64B8C687",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "MyStackapigatewayDAC610D1",
+              },
+              "/",
+              Object {
+                "Ref": "MyStackapigatewayDeploymentStageprod39B0FA82",
+              },
+              "/GET/welcome",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "MyStackapigatewaywelcomeGETApiPermissionTestMyTestStackMyStackapigatewayF59093F8GETwelcome182221C7": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloHandler64B8C687",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "MyStackapigatewayDAC610D1",
+              },
+              "/test-invoke-stage/GET/welcome",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "MyTestStack66C918DF": Object {
       "DeletionPolicy": "Delete",
       "Properties": Object {
         "AttributeDefinitions": Array [
@@ -619,19 +618,25 @@ Object {
           "WriteCapacityUnits": 5,
         },
         "TableName": "MyStack_employees",
+        "Tags": Array [
+          Object {
+            "Key": "stackType",
+            "Value": "dynamoTag",
+          },
+        ],
       },
       "Type": "AWS::DynamoDB::Table",
       "UpdateReplacePolicy": "Delete",
     },
-    "getAllEmployeesLambdaIdB222E456": Object {
+    "getAllEmployeesLambdaId1533DD0C": Object {
       "DependsOn": Array [
-        "getAllEmployeesLambdaIdServiceRoleDefaultPolicyAA33EFB9",
-        "getAllEmployeesLambdaIdServiceRole04E912E9",
+        "getAllEmployeesLambdaIdServiceRoleDefaultPolicyD4ED1DB1",
+        "getAllEmployeesLambdaIdServiceRole5D631D19",
       ],
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3Bucket567EFC9B",
+            "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3Bucket6EB586B1",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -644,7 +649,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3VersionKey1D5557B3",
+                          "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3VersionKeyECF3FF76",
                         },
                       ],
                     },
@@ -657,7 +662,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3VersionKey1D5557B3",
+                          "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3VersionKeyECF3FF76",
                         },
                       ],
                     },
@@ -676,7 +681,7 @@ Object {
         "Handler": "get-all.handler",
         "Role": Object {
           "Fn::GetAtt": Array [
-            "getAllEmployeesLambdaIdServiceRole04E912E9",
+            "getAllEmployeesLambdaIdServiceRole5D631D19",
             "Arn",
           ],
         },
@@ -684,7 +689,7 @@ Object {
       },
       "Type": "AWS::Lambda::Function",
     },
-    "getAllEmployeesLambdaIdServiceRole04E912E9": Object {
+    "getAllEmployeesLambdaIdServiceRole5D631D19": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -715,7 +720,7 @@ Object {
       },
       "Type": "AWS::IAM::Role",
     },
-    "getAllEmployeesLambdaIdServiceRoleDefaultPolicyAA33EFB9": Object {
+    "getAllEmployeesLambdaIdServiceRoleDefaultPolicyD4ED1DB1": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -732,7 +737,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "employeesDynamoDBIntanceID2B51FA38",
+                    "MyTestStack66C918DF",
                     "Arn",
                   ],
                 },
@@ -744,24 +749,24 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "getAllEmployeesLambdaIdServiceRoleDefaultPolicyAA33EFB9",
+        "PolicyName": "getAllEmployeesLambdaIdServiceRoleDefaultPolicyD4ED1DB1",
         "Roles": Array [
           Object {
-            "Ref": "getAllEmployeesLambdaIdServiceRole04E912E9",
+            "Ref": "getAllEmployeesLambdaIdServiceRole5D631D19",
           },
         ],
       },
       "Type": "AWS::IAM::Policy",
     },
-    "postEmployeeLambdaId21D06B84": Object {
+    "postEmployeeLambdaIdEF14D477": Object {
       "DependsOn": Array [
-        "postEmployeeLambdaIdServiceRoleDefaultPolicyFED76179",
-        "postEmployeeLambdaIdServiceRole3F633F3E",
+        "postEmployeeLambdaIdServiceRoleDefaultPolicy059BC5F7",
+        "postEmployeeLambdaIdServiceRoleDE741BB7",
       ],
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3Bucket567EFC9B",
+            "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3Bucket6EB586B1",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -774,7 +779,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3VersionKey1D5557B3",
+                          "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3VersionKeyECF3FF76",
                         },
                       ],
                     },
@@ -787,7 +792,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameterscb00777c78cccb80fb8c89270dd86eb7a322d6b56ba6a5156ffc3806e9b26f9dS3VersionKey1D5557B3",
+                          "Ref": "AssetParameters6c4fcd20971ef98d624572fccc6603a8ceec2ddbc5f6bdd1474faa8c6d28d253S3VersionKeyECF3FF76",
                         },
                       ],
                     },
@@ -806,15 +811,21 @@ Object {
         "Handler": "create.handler",
         "Role": Object {
           "Fn::GetAtt": Array [
-            "postEmployeeLambdaIdServiceRole3F633F3E",
+            "postEmployeeLambdaIdServiceRoleDE741BB7",
             "Arn",
           ],
         },
         "Runtime": "nodejs10.x",
+        "Tags": Array [
+          Object {
+            "Key": "stackType",
+            "Value": "lambdaTag",
+          },
+        ],
       },
       "Type": "AWS::Lambda::Function",
     },
-    "postEmployeeLambdaIdServiceRole3F633F3E": Object {
+    "postEmployeeLambdaIdServiceRoleDE741BB7": Object {
       "Properties": Object {
         "AssumeRolePolicyDocument": Object {
           "Statement": Array [
@@ -842,10 +853,16 @@ Object {
             ],
           },
         ],
+        "Tags": Array [
+          Object {
+            "Key": "stackType",
+            "Value": "lambdaTag",
+          },
+        ],
       },
       "Type": "AWS::IAM::Role",
     },
-    "postEmployeeLambdaIdServiceRoleDefaultPolicyFED76179": Object {
+    "postEmployeeLambdaIdServiceRoleDefaultPolicy059BC5F7": Object {
       "Properties": Object {
         "PolicyDocument": Object {
           "Statement": Array [
@@ -855,7 +872,7 @@ Object {
               "Resource": Array [
                 Object {
                   "Fn::GetAtt": Array [
-                    "employeesDynamoDBIntanceID2B51FA38",
+                    "MyTestStack66C918DF",
                     "Arn",
                   ],
                 },
@@ -867,10 +884,10 @@ Object {
           ],
           "Version": "2012-10-17",
         },
-        "PolicyName": "postEmployeeLambdaIdServiceRoleDefaultPolicyFED76179",
+        "PolicyName": "postEmployeeLambdaIdServiceRoleDefaultPolicy059BC5F7",
         "Roles": Array [
           Object {
-            "Ref": "postEmployeeLambdaIdServiceRole3F633F3E",
+            "Ref": "postEmployeeLambdaIdServiceRoleDE741BB7",
           },
         ],
       },
