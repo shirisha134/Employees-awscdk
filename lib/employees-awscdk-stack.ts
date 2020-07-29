@@ -1,31 +1,24 @@
 import * as cdk from "@aws-cdk/core";
-import * as dynamodb from "@aws-cdk/aws-dynamodb";
 import * as lambda from "@aws-cdk/aws-lambda";
 import * as apigateway from "@aws-cdk/aws-apigateway";
+import { DynamoDBConstruct } from "./dynamo-db.construct";
 
 export class EmployeesAwscdkStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     const siteName = props && props.stackName;
-    if(!siteName) {
-      throw new Error('Please provide stackName!');
+    if (!siteName) {
+      throw new Error("Please provide stackName!");
     }
     var apiGatewayName = siteName + "_apigateway";
     var tableName = siteName + "_employees";
     var lambdaVars = { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId" };
-    // instantiate dynamodb table instance with default instance size and resource id starts with employeesDynamoDBIntanceID
-    const employeesDynamoDBIntance = new dynamodb.Table(
-      this,
-      "employeesDynamoDBIntanceID",
-      {
-        tableName: tableName,
-        partitionKey: {
-          name: "employeeId",
-          type: dynamodb.AttributeType.NUMBER
-        },
-        removalPolicy: cdk.RemovalPolicy.DESTROY
-      }
-    );
+
+    // Provision dynamoDb
+    const employeesDynamoDBIntance = new DynamoDBConstruct(this, id, {
+      tableName,
+      partitionKeyName: "employeeId",
+    }).dynamoDbTable;
 
     // creating api gatway
     const api = new apigateway.RestApi(this, apiGatewayName);
@@ -38,7 +31,7 @@ export class EmployeesAwscdkStack extends cdk.Stack {
       runtime: lambda.Runtime.NODEJS_10_X,
       code: lambda.Code.fromAsset("src"),
       environment: lambdaVars,
-      handler: "hello.handler"
+      handler: "hello.handler",
     });
 
     // greeter lambda integration
@@ -53,7 +46,7 @@ export class EmployeesAwscdkStack extends cdk.Stack {
         code: new lambda.AssetCode("src"),
         handler: "create.handler",
         runtime: lambda.Runtime.NODEJS_10_X,
-        environment: lambdaVars
+        environment: lambdaVars,
       }
     );
     // granting readWrite permissions to lambdas on employeesDynamoDBIntance
@@ -75,7 +68,7 @@ export class EmployeesAwscdkStack extends cdk.Stack {
         code: new lambda.AssetCode("src"),
         handler: "get-all.handler",
         runtime: lambda.Runtime.NODEJS_10_X,
-        environment: { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId" }
+        environment: { TABLE_NAME: tableName, PRIMARY_KEY: "employeeId" },
       }
     );
     // granting read permissions to lambda on employeesDynamoDBIntance
