@@ -30,7 +30,7 @@ export class EmployeesAwscdkStack extends cdk.Stack {
     const welcomeLambda = new lambda.Function(this, "HelloHandler", {
       runtime: lambda.Runtime.NODEJS_10_X,
       code: lambda.Code.fromAsset("src"),
-      environment: lambdaVars,
+      environment: {SITE_NAME: siteName},
       handler: "hello.handler",
     });
 
