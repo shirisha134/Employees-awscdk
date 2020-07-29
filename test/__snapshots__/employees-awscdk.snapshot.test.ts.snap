@@ -618,6 +618,12 @@ Object {
           "WriteCapacityUnits": 5,
         },
         "TableName": "MyStack_employees",
+        "Tags": Array [
+          Object {
+            "Key": "stackType",
+            "Value": "dynamoTag",
+          },
+        ],
       },
       "Type": "AWS::DynamoDB::Table",
       "UpdateReplacePolicy": "Delete",
@@ -810,6 +816,12 @@ Object {
           ],
         },
         "Runtime": "nodejs10.x",
+        "Tags": Array [
+          Object {
+            "Key": "stackType",
+            "Value": "lambdaTag",
+          },
+        ],
       },
       "Type": "AWS::Lambda::Function",
     },
@@ -839,6 +851,12 @@ Object {
                 ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
               ],
             ],
+          },
+        ],
+        "Tags": Array [
+          Object {
+            "Key": "stackType",
+            "Value": "lambdaTag",
           },
         ],
       },

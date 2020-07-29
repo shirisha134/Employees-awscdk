@@ -3,7 +3,7 @@ import "source-map-support/register";
 import * as cdk from "@aws-cdk/core";
 import {EmployeesAwscdkStack} from "../lib/employees-awscdk-stack";
 
-const stackSuffix = 'EmployeesAwscdkStackAPP';
+const stackSuffix = 'EmployeesAwscdkStack';
 const sites = [
   {
     stackName: "bangalore",
@@ -18,7 +18,6 @@ const sites = [
 const app = new cdk.App();
 
 sites.forEach(site => {
-  var stackName = site.stackName + "EmployeesAwscdkStack";
   var stackName = `${site.stackName}${stackSuffix}`;
   new EmployeesAwscdkStack(app, stackName, {
     stackName: site.stackName,
