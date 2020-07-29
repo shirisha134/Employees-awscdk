@@ -20,6 +20,7 @@ const sites = [
 const app = new cdk.App();
 
 sites.forEach(site => {
+  var stackName = site.stackName + "EmployeesAwscdkStack";
   var stackName = `${site.stackName}${stackSuffix}`;
   new EmployeesAwscdkStack(app, stackName, {
     stackName: site.stackName,
