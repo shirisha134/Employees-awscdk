@@ -29,6 +29,9 @@ export class EmployeesAwscdkStack extends cdk.Stack {
       partitionKeyName: partitionKey,
     }).dynamoDbTable;
 
+    // tag employeesDynamoDBIntance, this will add tags to the node of a construct and all its the taggable children
+    cdk.Tag.add(employeesDynamoDBIntance, "stackType", "dynamoTag");
+
     // --- welcome lambda ---
     const welcomeLambda = new LambdaConstruct(this, "HelloHandler", {
       environment: { SITE_NAME: siteName },
@@ -46,6 +49,9 @@ export class EmployeesAwscdkStack extends cdk.Stack {
     ).lambda;
     // granting readWrite permissions to lambdas on employeesDynamoDBIntance
     employeesDynamoDBIntance.grantFullAccess(postEmployeeLambda);
+
+    // tag a postEmployeeLambda, this will add tags to the node of a construct and all its the taggable children
+    cdk.Tag.add(postEmployeeLambda, "stackType", "lambdaTag");
 
     // --- Get all demployee data lambda ---
     const getAllEmployeeLambda = new LambdaConstruct(

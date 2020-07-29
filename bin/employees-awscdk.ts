@@ -7,13 +7,11 @@ const stackSuffix = 'EmployeesAwscdkStackAPP';
 const sites = [
   {
     stackName: "bangalore",
-    region: "ap-south-1",
-    tags: { sitetag: "site2tag" }
+    region: "ap-south-1"
   },
   {
     stackName: "melbourne",
-    region: "ap-southeast-2",
-    tags: { sitetag: "site1tag" }
+    region: "ap-southeast-2"
   }
 ];
 
@@ -26,8 +24,7 @@ sites.forEach(site => {
     stackName: site.stackName,
     env: {
       region: site.region
-    },
-    tags: site.tags
+    }
   });
 });
 app.synth();
